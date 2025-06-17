@@ -1,0 +1,13 @@
+node_modules
+package-lock.json
+.idea
+.env*
+.env
+.vscode
+coverage
+dist
+.env.local
+.env.development.local
+.env.test.local
+config*
+Dokumentasi_API_Booking_Restoran_Lengkap.md

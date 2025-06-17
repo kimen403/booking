@@ -1,0 +1,45 @@
+{
+  "name": "tokorans",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "start-dev": "nodemon src/app.js",
+    "test": "jest --setupFiles dotenv/config -i",
+    "test:watch:change": "jest --watch --setupFiles dotenv/config -i",
+    "test:watch": "jest --watchAll --coverage --setupFiles dotenv/config -i",
+    "migrate": "prisma migrate deploy",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:test": "dotenv -e .env.test -- prisma migrate deploy",
+    "lint:fix": "eslint --fix --ext .js .",
+    "prisma:studio": "prisma studio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@antoniogiordano/hacli": "^1.0.2",
+    "@hapi/hapi": "^20.3.0",
+    "@hapi/jwt": "^2.2.0",
+    "@prisma/client": "5.21.1",
+    "auto-bind": "^4.0.0",
+    "axios": "^1.8.1",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "instances-container": "^2.0.3",
+    "nanoid": "^3.1.23",
+    "nodemailer": "^6.10.0",
+    "pg": "^8.6.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "jest": "^27.0.6",
+    "node-pg-migrate": "^5.10.0",
+    "nodemon": "^2.0.9",
+    "prisma": "5.21.1"
+  }
+}

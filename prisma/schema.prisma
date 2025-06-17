@@ -1,0 +1,82 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id         String   @id @default(uuid())
+    name       String   @db.VarChar(50)
+    email      String   @unique @db.VarChar(50)
+    password   String
+    role       String   @db.VarChar(20)
+    status     String   @db.VarChar(20)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    // Relations
+    vendor_roles VendorUser[]
+}
+
+model Authentication {
+    token String @unique
+}
+
+model Category {
+    id         String   @id @default(uuid())
+    name       String   @db.VarChar(50)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Vendor {
+    id                 String    @id @default(uuid())
+    vendor_name        String    @unique @db.VarChar(255)
+    vendor_description String?
+    vendor_logo_url    String?
+    contact_number     String?   @db.VarChar(25)
+    has_whatsapp       Boolean   @default(false)
+    status             String    @default("pending") @db.VarChar(20)
+    street             String?   @db.VarChar(255)
+    city               String?   @db.VarChar(100)
+    state              String?   @db.VarChar(100)
+    postal_code        String?   @db.VarChar(10)
+    country            String?   @db.VarChar(100)
+    latitude           Float?
+    longitude          Float?
+    verified_at        DateTime?
+    created_at         DateTime  @default(now())
+    updated_at         DateTime  @updatedAt
+
+    // Relations
+    vendor_users VendorUser[]
+
+    // Indexes
+    @@index([vendor_name])
+    @@index([status])
+    @@index([city])
+}
+
+model VendorUser {
+    id                 Int      @id @default(autoincrement())
+    vendor_id          String
+    user_id            String
+    role_in_vendor     String   @db.VarChar(20)
+    verification_notes String?
+    created_at         DateTime @default(now())
+    updated_at         DateTime @updatedAt
+
+    // Relations
+    vendor Vendor @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+    user   User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+    // Constraints
+    @@unique([vendor_id, user_id])
+    // Indexes
+    @@index([vendor_id])
+    @@index([user_id])
+    @@index([role_in_vendor])
+}
